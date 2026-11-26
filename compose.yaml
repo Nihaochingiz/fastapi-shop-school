@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: disc_school
+      POSTGRES_USER: disc
+      POSTGRES_PASSWORD: disc_dev
+    volumes:
+      - disc_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U disc -d disc_school"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  api:
+    build: ./api
+    environment:
+      DATABASE_URL: postgresql://disc:disc_dev@db:5432/disc_school
+    volumes:
+      - ./api:/app
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=2)"]
+      interval: 3s
+      timeout: 4s
+      retries: 15
+  web:
+    build: ./web
+    environment:
+      API_TARGET: http://api:8000
+    volumes:
+      - ./web:/app
+      - web_modules:/app/node_modules
+    ports:
+      - "127.0.0.1:${WEB_PORT:-5173}:5173"
+    depends_on:
+      api:
+        condition: service_healthy
+volumes:
+  disc_data:
+  web_modules:
