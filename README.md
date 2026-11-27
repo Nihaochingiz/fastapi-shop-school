@@ -69,7 +69,7 @@ docker compose ps
 
 ```bash
 # Базовые проверки стартового проекта
-docker compose exec api python -m pytest -q -k base
+docker compose exec api python -m pytest -q tests/test_school.py::test_base_catalog_and_existing_card
 
 # Проверка конкретного урока (01–25)
 docker compose exec api python -m pytest -q -k lesson_10
