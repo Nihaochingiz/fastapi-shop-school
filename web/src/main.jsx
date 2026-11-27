@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { finalChecks, finalEndpoints, finalRequirements, lessons, lessonTest } from './course.js';
+import { finalChecks, finalEndpoints, finalRequirements, lessonSections, lessons, lessonTest } from './course.js';
 import { placeOrder, request } from './client.js';
 import './styles.css';
 
@@ -14,8 +14,16 @@ function readRoute() {
 
 function readProgress() {
   try {
-    const saved = JSON.parse(localStorage.getItem('disc-school-progress'));
-    return Array.isArray(saved) ? lessons.filter(lesson => saved.includes(lesson.id)).map(lesson => lesson.id) : [];
+    const saved = JSON.parse(localStorage.getItem('disc-school-progress-v2'));
+    if (Array.isArray(saved)) {
+      return lessons.filter(lesson => saved.includes(lesson.id)).map(lesson => lesson.id);
+    }
+    const previous = JSON.parse(localStorage.getItem('disc-school-progress'));
+    if (!Array.isArray(previous)) return [];
+    const equivalents = [
+      [['01', '04'], '03'], [['02'], '06'], [['03'], '04'], [['05'], '25'], [['06'], '26'],
+    ];
+    return equivalents.filter(([oldIds]) => oldIds.every(id => previous.includes(id))).map(([, id]) => id);
   } catch {
     return [];
   }
@@ -74,15 +82,18 @@ function Home({ progress }) {
     </section>
     <section className="curriculum">
       <div className="section-head">
-        <div><h2>Программа курса</h2><p>В каждом уроке — теория, вопрос и правка в готовом проекте.</p></div>
+        <div><h2>Программа курса</h2><p>{lessons.length} уроков. В каждом — теория, вопрос, правка в проекте и проверка.</p></div>
         <Progress progress={progress} />
       </div>
-      <div className="lesson-grid">
-        {lessons.map(lesson => <a className="lesson-tile" key={lesson.id} href={'#/lesson/' + lesson.id}>
-          <span className={progress.includes(lesson.id) ? 'tile-number done' : 'tile-number'} aria-label={progress.includes(lesson.id) ? 'Пройдено' : undefined}>{progress.includes(lesson.id) ? '✓' : lesson.id}</span>
-          <div><span className="topic">{lesson.topic}</span><h3>{lesson.title}</h3></div>
-        </a>)}
-      </div>
+      {lessonSections.map(section => <section className="curriculum-section" key={section.title}>
+        <h3>{section.title}</h3>
+        <div className="lesson-grid">
+          {section.lessons.map(lesson => <a className="lesson-tile" key={lesson.id} href={'#/lesson/' + lesson.id}>
+            <span className={progress.includes(lesson.id) ? 'tile-number done' : 'tile-number'} aria-label={progress.includes(lesson.id) ? 'Пройдено' : undefined}>{progress.includes(lesson.id) ? '✓' : lesson.id}</span>
+            <div><span className="topic">{lesson.topic}</span><h4>{lesson.title}</h4></div>
+          </a>)}
+        </div>
+      </section>)}
     </section>
     <Setup />
   </>;
@@ -93,7 +104,7 @@ function Setup() {
     <h2>Локальный запуск</h2>
     <p>Откройте папку проекта в редакторе. Из той же папки поднимите три сервиса через Docker Compose.</p>
     <Command text="docker compose up --build" />
-    <p>Уроки и витрина открываются на порту 5173, Swagger UI — на порту 8000. Команды тестов есть в каждом уроке. Исправляйте TODO по очереди и сверяйте результат с тестами.</p>
+    <p>Уроки и витрина открываются на порту 5173, Swagger UI — на порту 8000. Маршруты /api/lab доступны в Swagger UI. Исправляйте TODO по очереди и сверяйте результат с тестами.</p>
   </section>;
 }
 
@@ -114,12 +125,14 @@ function Lesson({ lesson, progress, toggleDone }) {
   const [answer, setAnswer] = useState(null);
   const index = lessons.indexOf(lesson);
   const done = progress.includes(lesson.id);
+  const section = lessonSections.find(item => item.lessons.includes(lesson));
   return <div className="lesson-layout">
     <aside className="lesson-side">
       <a className="back" href="#/">Все уроки</a>
       <Progress progress={progress} />
-      <nav aria-label="Уроки">
-        {lessons.map(item => <a key={item.id} href={'#/lesson/' + item.id} aria-current={item === lesson ? 'page' : undefined}>
+      <nav aria-label="Уроки раздела">
+        <h2>{section.title}</h2>
+        {section.lessons.map(item => <a key={item.id} href={'#/lesson/' + item.id} aria-current={item === lesson ? 'page' : undefined}>
           <span>{progress.includes(item.id) ? '✓' : item.id}</span>{item.title}
         </a>)}
       </nav>
@@ -129,9 +142,9 @@ function Lesson({ lesson, progress, toggleDone }) {
       <h1>{lesson.title}</h1><p className="lead">{lesson.intro}</p>
       <section className="panel">
         <h2>Теория</h2>
-        {lesson.theory.map(([title, body]) => <div className="theory" key={title}><h3>{title}</h3><p>{body}</p></div>)}
+        {lesson.theory.map(body => <p className="theory" key={body}>{body}</p>)}
         <pre>{lesson.code}</pre>
-        <a className="text-link" href={lesson.doc[1]} target="_blank" rel="noreferrer">{lesson.doc[0]}</a>
+        <a className="text-link" href={lesson.doc} target="_blank" rel="noreferrer">Документация по теме</a>
       </section>
       <section className="panel">
         <h2>Вопрос</h2><p>{lesson.question}</p>
@@ -150,10 +163,14 @@ function Lesson({ lesson, progress, toggleDone }) {
         <p>Если тесты прошли, отметьте урок. Отметки сохраняются в этом браузере.</p>
         <div className="actions">
           <button className="button primary" type="button" aria-pressed={done} onClick={() => toggleDone(lesson.id)}>{done ? 'Снять отметку' : 'Отметить как пройденный'}</button>
-          <a className="button ghost" href="#/shop">Проверить на витрине</a>
+          {lesson.practice === 'shop' && <a className="button ghost" href="#/shop">Проверить на витрине</a>}
+          {lesson.practice === 'api' && <a className="button ghost" href="/docs" target="_blank" rel="noreferrer">Открыть Swagger UI</a>}
         </div>
       </section>
-      <a className="button ghost" href={lessons[index + 1] ? '#/lesson/' + lessons[index + 1].id : '#/final'}>{lessons[index + 1] ? 'Следующий урок' : 'Перейти к итоговому проекту'}</a>
+      <div className="actions">
+        {lessons[index - 1] && <a className="button ghost" href={'#/lesson/' + lessons[index - 1].id}>Предыдущий урок</a>}
+        <a className="button ghost" href={lessons[index + 1] ? '#/lesson/' + lessons[index + 1].id : '#/final'}>{lessons[index + 1] ? 'Следующий урок' : 'Перейти к итоговому проекту'}</a>
+      </div>
     </article>
   </div>;
 }
@@ -239,7 +256,7 @@ function GamePage({ id }) {
   return <><a href="#/shop" className="back">Все диски</a>
     {state.loading && !game && <p role="status">Загружаем карточку…</p>}
     {state.error && <p className="notice" role="alert">{state.error}</p>}
-    {state.data === null && <p className="notice" role="status">API вернул пустую карточку со статусом 200. Поведение исправляется во втором уроке.</p>}
+    {state.data === null && <p className="notice" role="status">API вернул пустую карточку со статусом 200. Поведение исправляется в уроке 06.</p>}
     {game && <div className="game-page">
       <Cover game={game} />
       <div><p className="eyebrow"><span /> {game.genre} · {conditionLabels[game.condition]}</p><h1>{game.title}</h1>
@@ -262,7 +279,7 @@ function FinalProject() {
   return <div className="final-page">
     <p className="eyebrow"><span /> Итоговый проект</p><h1>Магазин Xbox 360</h1>
     <p className="lead">Соберите отдельный магазин подержанных игр. Возьмите витрину Толи за образец и добавьте корзину с заказом из нескольких позиций.</p>
-    <div className="stack">{['FastAPI', 'PostgreSQL', 'React', 'Docker Compose', 'pytest', 'Alembic'].map(tool => <span key={tool}>{tool}</span>)}</div>
+    <div className="stack">{['FastAPI', 'PostgreSQL', 'SQLAlchemy', 'React', 'Docker Compose', 'pytest', 'Alembic'].map(tool => <span key={tool}>{tool}</span>)}</div>
     <section className="panel"><h2>Техническое задание</h2>
       {finalRequirements.map(([title, body]) => <div className="theory" key={title}><h3>{title}</h3><p>{body}</p></div>)}
       <h3>Пример тела заказа</h3>
@@ -296,7 +313,7 @@ function App() {
     const next = progress.includes(id) ? progress.filter(item => item !== id) : [...progress, id];
     setProgress(next);
     try {
-      localStorage.setItem('disc-school-progress', JSON.stringify(next));
+      localStorage.setItem('disc-school-progress-v2', JSON.stringify(next));
     } catch {
       // Progress remains available for this session when storage is blocked.
     }

@@ -66,6 +66,8 @@ h3 { font-size: 1.19rem; margin-bottom: .5rem; }
 .case-art i:nth-child(3) { width: 49%; border-color: #ac93efd0; }
 .case-art i:nth-child(4) { width: 32%; border-color: #f1e4ffb0; }
 .curriculum { margin-top: 2.5rem; }
+.curriculum-section { margin-top: 1.6rem; }
+.curriculum-section > h3 { margin-bottom: .8rem; font-size: 1.16rem; }
 .section-head { display: flex; justify-content: space-between; align-items: end; gap: 1.2rem; margin-bottom: 1rem; }
 .section-head p, .setup p { color: var(--soft); margin-bottom: 0; }
 .progress { min-width: min(210px, 100%); }
@@ -81,7 +83,7 @@ progress::-moz-progress-bar { background: var(--accent); }
 .tile-number { display: grid; place-items: center; width: 42px; height: 42px; flex: 0 0 42px; border-radius: 7px; color: #6044af; background: #eee9ff; font: 700 .92rem/1 ui-monospace, monospace; }
 .tile-number.done { color: var(--success); background: #e4f6ed; }
 .topic { display: block; color: var(--violet); font-size: .81rem; margin-bottom: .2rem; }
-.lesson-tile h3 { margin: 0; }
+.lesson-tile h4 { margin: 0; line-height: 1.2; letter-spacing: -.025em; font-size: 1.05rem; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); padding: clamp(1.05rem, 3vw, 1.7rem); margin-bottom: 1.05rem; }
 .panel h2 { font-size: 1.56rem; }
 .panel p, .panel li { color: #514764; }
@@ -102,6 +104,7 @@ pre { padding: .8rem; white-space: pre-wrap; overflow-wrap: anywhere; }
 .lesson-side nav { margin-top: 1rem; display: grid; gap: .23rem; }
 .lesson-side nav a { display: flex; gap: .62rem; padding: .56rem .5rem; font-size: .88rem; border-radius: 6px; }
 .lesson-side nav a[aria-current], .lesson-side nav a:hover { background: #eee9ff; }
+.lesson-side nav h2 { margin: .25rem .5rem; font-size: .93rem; color: var(--soft); }
 .lesson-side nav span { color: var(--accent); font-family: ui-monospace, monospace; }
 .lesson-layout h1, .game-page h1 { font-size: clamp(2.2rem, 5.6vw, 4rem); }
 .theory { margin-top: 1.2rem; }

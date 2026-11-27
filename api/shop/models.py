@@ -16,7 +16,7 @@ class Game(BaseModel):
 class OrderInput(BaseModel):
     game_id: int = Field(gt=0)
     buyer: str
-    # TODO 03: Ограничьте количество диапазоном 1–5.
+    # TODO 04: Ограничьте количество диапазоном 1–5.
     quantity: int
 
 

@@ -1,70 +1,84 @@
 # Дисковая · Учебник FastAPI
 
-Практический курс на русском языке. Толя продаёт подержанные игры для PS2. Витрина и карточки уже собраны на React, а API использует FastAPI и PostgreSQL. В шести уроках нужно исправить небольшие участки кода и проверить изменения тестами. После курса вы спроектируете отдельный магазин Xbox 360 по техническому заданию на сайте.
+Практический курс из 26 уроков. Толя продаёт подержанные игры для PS2. В каждом уроке есть теория, вопрос, правка в готовом проекте и проверка. В конце курса — техническое задание на отдельный магазин Xbox 360.
 
 ## Запуск в WSL или Linux
 
-Если проект уже лежит в `~/projects`, перейдите в него. Для нового скачивания:
+Нужен Docker с командой `docker compose`. В Docker Desktop для Windows включите интеграцию с дистрибутивом WSL. Если папка проекта уже есть, пропустите клонирование.
 
 ```bash
 mkdir -p ~/projects
 cd ~/projects
 git clone https://github.com/Nihaochingiz/fastapi-shop-school.git
-```
-
-Запустите учебник из папки проекта:
-
-```bash
-cd ~/projects/fastapi-shop-school
+cd fastapi-shop-school
 docker compose up --build -d
 docker compose ps
 ```
 
 - [Учебник](http://localhost:5173/)
 - [Магазин Толи](http://localhost:5173/#/shop)
-- [ТЗ магазина Xbox 360](http://localhost:5173/#/final)
 - [Swagger UI](http://localhost:8000/docs)
+- [ТЗ магазина Xbox 360](http://localhost:5173/#/final)
 
-Нужен работающий Docker с командой `docker compose`. В Docker Desktop для Windows включите интеграцию с вашим дистрибутивом WSL. Если порт занят, задайте другой через переменные `WEB_PORT` и `API_PORT`, например `WEB_PORT=5175 API_PORT=8005 docker compose up --build -d`. PostgreSQL доступен только внутри сети Compose. Указанные в Compose логин и пароль используются в локальной учебной среде.
+Если порты заняты, задайте другие: `WEB_PORT=5175 API_PORT=8005 docker compose up --build -d`. Swagger UI также доступен через прокси фронтенда по адресу `/docs`.
 
 ## Как проходить
 
 1. Прочитайте теорию и ответьте на вопрос в браузере.
-2. Найдите `TODO` по номеру урока в указанном файле. Запустите тест урока, чтобы увидеть текущее поведение.
-3. Внесите правку. Исходники примонтированы в контейнеры, поэтому изменение Python и React подхватывается без пересборки.
-4. Снова запустите тест и проверьте результат на витрине или в Swagger UI. Отметьте урок как пройденный. Отметка хранится в браузере.
-5. После шестого урока откройте итоговое ТЗ. В нём перечислены требования, API и критерии приёмки.
+2. Найдите `TODO` по номеру урока. Запустите указанную в уроке команду теста, чтобы увидеть стартовое поведение.
+3. Внесите правку, повторите тест и проверьте результат в Swagger UI, на витрине или в терминале. Изменения Python и React подхватываются через bind mount. После изменений Compose или Dockerfile пересоздайте или пересоберите сервис.
+4. Отметьте урок. Отметки сохраняются в браузере. После урока 26 откройте итоговое ТЗ.
 
-| Урок | Что вы добавите | Где искать |
+| Урок | Тема | Файл для практики |
 | --- | --- | --- |
-| 01 | Фильтр по максимальной цене | `api/shop/catalog.py` |
-| 02 | HTTP 404 для отсутствующей игры | `api/shop/catalog.py` |
-| 03 | Валидацию количества через Pydantic | `api/shop/models.py`, `api/shop/orders.py` |
-| 04 | Стабильную сортировку по цене | `api/shop/catalog.py` |
-| 05 | Списание остатка в транзакции | `api/shop/orders.py` |
-| 06 | Отправку заказа из формы React | `web/src/client.js` |
+| 01 | Что такое бэкенд: клиент, сервер, API | `api/shop/lab/routes.py` |
+| 02 | Установка FastAPI и первый endpoint | `api/shop/lab/routes.py` |
+| 03 | Path- и query-параметры | `api/shop/catalog.py` |
+| 04 | Pydantic и тело запроса | `api/shop/models.py` |
+| 05 | HTTP под капотом: метод, статус, заголовки | `api/shop/lab/routes.py` |
+| 06 | Response-модели и статус-коды | `api/shop/catalog.py` |
+| 07 | PostgreSQL в Docker | `api/shop/lab/routes.py` |
+| 08 | SQLAlchemy: модель, engine, session | `api/shop/lab/repositories.py` |
+| 09 | Сессия БД через Depends | `api/shop/lab/routes.py` |
+| 10 | CRUD-эндпоинты с реальной БД | `api/shop/lab/routes.py` |
+| 11 | Alembic: миграции схемы | `api/migrations/versions/0002_disk_title_index.py` |
+| 12 | Раздутый main.py: выносим роуты | `api/shop/lab/routes.py` |
+| 13 | Слои: routes/services/repositories | `api/shop/lab/services.py` |
+| 14 | Конфигурация через pydantic-settings | `api/shop/lab/routes.py` |
+| 15 | Хеширование паролей: bcrypt | `api/shop/lab/security.py` |
+| 16 | Регистрация и логин | `api/shop/lab/routes.py` |
+| 17 | JWT-токены | `api/shop/lab/security.py` |
+| 18 | Защита эндпоинтов через Depends | `api/shop/lab/routes.py` |
+| 19 | Первый тест на pytest и TestClient | `api/tests/learner_checks.py` |
+| 20 | Тестовая БД с откатом транзакции | `api/tests/learner_checks.py` |
+| 21 | Что и как тестировать в API | `api/tests/learner_checks.py` |
+| 22 | Что такое контейнер | `compose.yaml` |
+| 23 | Dockerfile для FastAPI | `api/Dockerfile` |
+| 24 | Docker Compose: запускаем весь стек | `compose.yaml` |
+| 25 | Заказ и остатки в транзакции | `api/shop/orders.py` |
+| 26 | React: оформляем заказ из витрины | `web/src/client.js` |
+
+## Данные и авторизация
+
+- Витрина использует `/api/games` и `/api/orders`. Её стартовый каталог загружается из `api/shop/schema.sql`.
+- Упражнения ORM и авторизации находятся в `/api/lab`. Они используют свои таблицы `lab_disks` и `lab_users`, поэтому можно менять учебный инвентарь без изменения основного каталога. При старте API применяет миграции Alembic. Для ручной проверки используйте `docker compose exec api alembic current`.
+- Для регистрации используйте вымышленные данные. `SHOP_LABEL` задаёт название в лаборатории, `TOKEN_MINUTES` — срок токена после урока 17. Если `JWT_SECRET` не передан, API генерирует ключ при запуске, поэтому токены после перезапуска перестают действовать. Пароль БД в Compose предназначен для локальной среды.
+- `docker compose logs -f api web db` показывает логи. `docker compose down` останавливает сервисы с сохранением базы.
 
 ## Тесты
 
 ```bash
-# Базовая проверка, которая проходит и на стартовом коде
+# Базовые проверки стартового проекта
 docker compose exec api python -m pytest -q -k base
 
-# Проверка первого урока. Подставьте lesson_02 … lesson_05 для остальных.
-docker compose exec api python -m pytest -q -k lesson_01
+# Проверка конкретного урока (01–25)
+docker compose exec api python -m pytest -q -k lesson_10
 
-# Полный набор после внесения правок
-docker compose exec api python -m pytest -q
+# Урок 26 и полный прогон
 docker compose exec web pnpm test
+docker compose exec api python -m pytest -q
 ```
 
-В стартовом наборе ожидается **7 падающих проверок API и 2 падающие проверки клиента**. Они описывают поведение, которое нужно реализовать. На backend тесты работают через FastAPI TestClient и настоящий PostgreSQL. Каждый тест создаёт временную схему с начальными данными и удаляет её после проверки. Тесты клиента проверяют сетевую функцию, которую вызывает React-форма. В том числе проверяются тело запроса, успешный ответ и сообщение об ошибке.
+Часть проверок в стартовом проекте намеренно падает. Это ожидаемый результат до выполнения заданий. Тесты API используют FastAPI TestClient и настоящий PostgreSQL. Каждый тест с БД создаёт свою схему и удаляет её после завершения. Урок 20 отдельно проверяет откат внешней транзакции и SAVEPOINT. Уроки 22–24 имеют проверки файлов конфигурации и ручные команды Docker.
 
-## Как устроен проект
-
-- `api/shop/schema.sql` создаёт таблицы и добавляет шесть стартовых игр при запуске API. PostgreSQL хранит остатки и заказы в томе Compose.
-- `api/shop/db.py` открывает подключение через `DATABASE_URL`. FastAPI передаёт его в обработчики через `Depends`.
-- `web/src/course.js` содержит уроки и требования итогового проекта. Vite проксирует запросы `/api` в контейнер FastAPI.
-- `docker compose logs -f api web db` показывает сообщения сервисов. `docker compose down` останавливает проект с сохранением базы.
-
-Документация — [FastAPI и тестирование](https://fastapi.tiangolo.com/tutorial/testing/), [Docker Compose и готовность сервисов](https://docs.docker.com/compose/how-tos/startup-order/).
+Документация — [FastAPI и тестирование](https://fastapi.tiangolo.com/tutorial/testing/), [транзакции SQLAlchemy](https://docs.sqlalchemy.org/en/20/orm/session_transaction.html), [Docker Compose и готовность сервисов](https://docs.docker.com/compose/how-tos/startup-order/).

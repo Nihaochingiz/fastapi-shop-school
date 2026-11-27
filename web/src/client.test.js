@@ -9,7 +9,7 @@ test('базовый клиент читает ответ каталога', asy
   assert.deepEqual(await request('/api/games', undefined, async () => Response.json([])), []);
 });
 
-test('lesson_06 отправляет POST с JSON и возвращает созданный заказ', async () => {
+test('lesson_26 отправляет POST с JSON и возвращает созданный заказ', async () => {
   let count = 0;
   const actual = await placeOrder(order, async (path, options) => {
     count += 1;
@@ -23,7 +23,7 @@ test('lesson_06 отправляет POST с JSON и возвращает соз
   assert.deepEqual(actual, result);
 });
 
-test('lesson_06 показывает сообщение FastAPI при конфликте', async () => {
+test('lesson_26 показывает сообщение FastAPI при конфликте', async () => {
   await assert.rejects(
     placeOrder(order, async () => Response.json({ detail: 'Недостаточно дисков' }, { status: 409 })),
     { message: 'Недостаточно дисков' },

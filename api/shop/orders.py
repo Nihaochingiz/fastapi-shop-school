@@ -23,7 +23,7 @@ def create_order(order: OrderInput, db: Annotated[Connection, Depends(get_db)]):
             raise HTTPException(404, "Игра не найдена")
         if game["stock"] < order.quantity:
             raise HTTPException(409, "Недостаточно дисков")
-        # TODO 05: Спишите остаток через UPDATE в этой же транзакции.
+        # TODO 25: Спишите остаток через UPDATE в этой же транзакции.
         result = db.execute(
             """INSERT INTO orders (game_id, buyer, quantity, total_rub)
                VALUES (%s, %s, %s, %s)

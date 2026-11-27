@@ -22,9 +22,9 @@ def list_games(
     if genre is not None:
         conditions.append("genre = %s")
         params.append(genre)
-    # TODO 01: Добавьте условие для max_price.
+    # TODO 03: Добавьте условие для max_price.
     where = " WHERE " + " AND ".join(conditions) if conditions else ""
-    # TODO 04: Добавьте сортировку price_asc с id для одинаковых цен.
+    # TODO 03: Добавьте сортировку price_asc с id для одинаковых цен.
     order_by = "id"
     return db.execute(
         f"SELECT * FROM games{where} ORDER BY {order_by}", params
@@ -34,5 +34,5 @@ def list_games(
 @router.get("/{game_id}", response_model=Game | None)
 def get_game(game_id: int, db: Database):
     game = db.execute("SELECT * FROM games WHERE id = %s", (game_id,)).fetchone()
-    # TODO 02: Если игра отсутствует, верните HTTP 404 с detail="Игра не найдена".
+    # TODO 06: Если игра отсутствует, верните HTTP 404 с detail="Игра не найдена".
     return game

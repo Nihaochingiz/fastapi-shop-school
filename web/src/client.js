@@ -9,6 +9,6 @@ export async function request(path, options, fetcher = fetch) {
 }
 
 export async function placeOrder(order, fetcher = fetch) {
-  // TODO 06: Отправьте order как JSON на /api/orders через request().
-  throw new Error('Отправка заказа появится после урока 6.');
+  // TODO 26: Отправьте order как JSON на /api/orders через request().
+  throw new Error('Отправка заказа появится после урока 26.');
 }

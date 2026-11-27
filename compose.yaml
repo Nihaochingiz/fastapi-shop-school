@@ -14,10 +14,15 @@ services:
       retries: 20
   api:
     build: ./api
+    # TODO 22: Добавьте метку учебного контейнера.
     environment:
       DATABASE_URL: postgresql://disc:disc_dev@db:5432/disc_school
+      SHOP_LABEL: ${SHOP_LABEL:-Дисковая}
+      TOKEN_MINUTES: "${TOKEN_MINUTES:-15}"
+      JWT_SECRET:
     volumes:
       - ./api:/app
+      - ./compose.yaml:/course/compose.yaml:ro
     ports:
       - "127.0.0.1:${API_PORT:-8000}:8000"
     depends_on:
@@ -40,6 +45,7 @@ services:
     depends_on:
       api:
         condition: service_healthy
+    # TODO 24: Добавьте проверку web через прокси /api/health.
 volumes:
   disc_data:
   web_modules:
