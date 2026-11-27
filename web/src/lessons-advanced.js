@@ -24,7 +24,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "Соль различается для каждой записи и сохраняется внутри bcrypt-хеша.",
-    "doc": "https://github.com/pyca/bcrypt",
+    "doc": "https://habr.com/ru/articles/1051800/",
     "practice": "api"
   },
   {
@@ -52,7 +52,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "Ограничение БД проверяется при записи и защищает от гонки.",
-    "doc": "https://www.postgresql.org/docs/16/ddl-constraints.html",
+    "doc": "https://postgrespro.ru/docs/postgresql/16/ddl-constraints#DDL-CONSTRAINTS-UNIQUE-CONSTRAINTS",
     "practice": "api"
   },
   {
@@ -80,7 +80,7 @@ export const advanced = [
     ],
     "correct": 2,
     "explanation": "JWT подписан, но содержимое обычного токена легко прочитать.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/security/oauth2-jwt/",
     "practice": "api"
   },
   {
@@ -108,7 +108,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "FastAPI разрешает зависимости до вызова функции маршрута.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/security/first-steps/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/security/first-steps/",
     "practice": "api"
   },
   {
@@ -136,7 +136,7 @@ export const advanced = [
     ],
     "correct": 0,
     "explanation": "Статус и содержание ответа — разные части контракта.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/testing/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/testing/",
     "practice": "api"
   },
   {
@@ -164,7 +164,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "Внутренний commit завершает SAVEPOINT, а внешняя транзакция остаётся под контролем теста.",
-    "doc": "https://docs.sqlalchemy.org/en/20/orm/session_transaction.html#joining-a-session-into-an-external-transaction-such-as-for-test-suites",
+    "doc": "https://pythondoc.ru/docs/sqlalchemy/2.0/orm/session_transaction/#joining-a-session-into-an-external-transaction-such-as-for-test-suites",
     "practice": "api"
   },
   {
@@ -192,7 +192,7 @@ export const advanced = [
     ],
     "correct": 0,
     "explanation": "Неожиданное изменение БД — регрессия даже при правильно выбранном статусе.",
-    "doc": "https://docs.pytest.org/en/stable/how-to/parametrize.html",
+    "doc": "https://pytest-docs-ru.readthedocs.io/ru/latest/parametrize.html",
     "practice": "api"
   },
   {
@@ -220,7 +220,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "Один образ может стать основой нескольких отдельных контейнеров.",
-    "doc": "https://docs.docker.com/get-started/docker-concepts/the-basics/what-is-a-container/",
+    "doc": "https://selectel.ru/blog/what-is-docker/",
     "practice": "terminal"
   },
   {
@@ -248,7 +248,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "EXPOSE — метаданные образа, а ports создаёт проброс.",
-    "doc": "https://docs.docker.com/reference/dockerfile/#expose",
+    "doc": "https://etl-kitchen-book.ru/data/containers/Docker/deep_dive/",
     "practice": "terminal"
   },
   {
@@ -276,7 +276,7 @@ export const advanced = [
     ],
     "correct": 1,
     "explanation": "Docker считает проверку успешной только при нулевом коде завершения.",
-    "doc": "https://docs.docker.com/reference/compose-file/services/#healthcheck",
+    "doc": "https://habr.com/ru/companies/ruvds/articles/1052844/",
     "practice": "terminal"
   },
   {
@@ -304,7 +304,7 @@ export const advanced = [
     ],
     "correct": 2,
     "explanation": "PostgreSQL отменяет все изменения той же транзакции.",
-    "doc": "https://www.postgresql.org/docs/16/explicit-locking.html#LOCKING-ROWS",
+    "doc": "https://postgrespro.ru/docs/postgresql/16/explicit-locking#LOCKING-ROWS",
     "practice": "shop"
   },
   {
@@ -332,7 +332,7 @@ export const advanced = [
     ],
     "correct": 0,
     "explanation": "HTTP-ошибка сама не отклоняет Promise fetch.",
-    "doc": "https://react.dev/learn/synchronizing-with-effects",
+    "doc": "https://developer.mozilla.org/ru/docs/Web/API/Fetch_API/Using_Fetch",
     "practice": "shop"
   }
 ];

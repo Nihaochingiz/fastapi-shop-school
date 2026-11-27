@@ -24,7 +24,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "Подключение с учётными данными открывает сервер.",
-    "doc": "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview",
+    "doc": "https://developer.mozilla.org/ru/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview",
     "practice": "api"
   },
   {
@@ -52,7 +52,7 @@ export const foundations = [
     ],
     "correct": 1,
     "explanation": "Uvicorn передаёт запрос приложению FastAPI.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/first-steps/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/first-steps/",
     "practice": "api"
   },
   {
@@ -80,7 +80,7 @@ export const foundations = [
     ],
     "correct": 1,
     "explanation": "ID в пути указывает на отдельный ресурс.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/query-params/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/query-params/",
     "practice": "shop"
   },
   {
@@ -108,7 +108,7 @@ export const foundations = [
     ],
     "correct": 2,
     "explanation": "Запрос корректен по схеме, но выполнить его нельзя из-за текущих данных.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/body/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/body/",
     "practice": "api"
   },
   {
@@ -136,7 +136,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "Media type находится в заголовке Content-Type.",
-    "doc": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Messages",
+    "doc": "https://developer.mozilla.org/ru/docs/Web/HTTP/Guides/Messages",
     "practice": "api"
   },
   {
@@ -164,7 +164,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "FastAPI использует response_model для сериализации и OpenAPI.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/response-model/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/response-model/",
     "practice": "shop"
   },
   {
@@ -192,7 +192,7 @@ export const foundations = [
     ],
     "correct": 1,
     "explanation": "Сервисы Compose разрешают имена соседей в общей сети.",
-    "doc": "https://docs.docker.com/compose/how-tos/startup-order/",
+    "doc": "https://habr.com/ru/articles/823816/",
     "practice": "api"
   },
   {
@@ -220,7 +220,7 @@ export const foundations = [
     ],
     "correct": 2,
     "explanation": "Session использует подключение Engine для работы с БД.",
-    "doc": "https://docs.sqlalchemy.org/en/20/orm/session_basics.html",
+    "doc": "https://pythondoc.ru/docs/sqlalchemy/2.0/orm/session_basics/",
     "practice": "api"
   },
   {
@@ -248,7 +248,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "FastAPI ищет замену по объекту исходной функции-зависимости.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/dependencies/dependencies-with-yield/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/dependencies/dependencies-with-yield/",
     "practice": "api"
   },
   {
@@ -276,7 +276,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "Новый запрос открывает сессию и читает сохранённую строку.",
-    "doc": "https://docs.sqlalchemy.org/en/20/orm/session_basics.html#committing",
+    "doc": "https://pythondoc.ru/docs/sqlalchemy/2.0/orm/session_basics/#committing",
     "practice": "api"
   },
   {
@@ -304,7 +304,7 @@ export const foundations = [
     ],
     "correct": 1,
     "explanation": "Откат этой ревизии удаляет только добавленный индекс.",
-    "doc": "https://alembic.sqlalchemy.org/en/latest/tutorial.html",
+    "doc": "https://habr.com/ru/companies/yandex/articles/511892/",
     "practice": "api"
   },
   {
@@ -332,7 +332,7 @@ export const foundations = [
     ],
     "correct": 2,
     "explanation": "При подключении FastAPI складывает префикс и путь.",
-    "doc": "https://fastapi.tiangolo.com/tutorial/bigger-applications/",
+    "doc": "https://fastapi.tiangolo.com/ru/tutorial/bigger-applications/",
     "practice": "api"
   },
   {
@@ -360,7 +360,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "Сервис отвечает за правила предметной области.",
-    "doc": "https://docs.sqlalchemy.org/en/20/orm/session_basics.html",
+    "doc": "https://habr.com/ru/articles/983254/",
     "practice": "api"
   },
   {
@@ -388,7 +388,7 @@ export const foundations = [
     ],
     "correct": 0,
     "explanation": "pydantic-settings читает переменную окружения при создании объекта.",
-    "doc": "https://pydantic.dev/docs/validation/latest/concepts/pydantic_settings/",
+    "doc": "https://fastapi.tiangolo.com/ru/advanced/settings/",
     "practice": "api"
   }
 ];

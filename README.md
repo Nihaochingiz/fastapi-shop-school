@@ -81,4 +81,4 @@ docker compose exec api python -m pytest -q
 
 Часть проверок в стартовом проекте намеренно падает. Это ожидаемый результат до выполнения заданий. Тесты API используют FastAPI TestClient и настоящий PostgreSQL. Каждый тест с БД создаёт свою схему и удаляет её после завершения. Урок 20 отдельно проверяет откат внешней транзакции и SAVEPOINT. Уроки 22–24 имеют проверки файлов конфигурации и ручные команды Docker.
 
-Документация — [FastAPI и тестирование](https://fastapi.tiangolo.com/tutorial/testing/), [транзакции SQLAlchemy](https://docs.sqlalchemy.org/en/20/orm/session_transaction.html), [Docker Compose и готовность сервисов](https://docs.docker.com/compose/how-tos/startup-order/).
+Материалы на русском — [FastAPI и тестирование](https://fastapi.tiangolo.com/ru/tutorial/testing/), [транзакции SQLAlchemy](https://pythondoc.ru/docs/sqlalchemy/2.0/orm/session_transaction/), [Docker Compose и готовность сервисов](https://habr.com/ru/companies/ruvds/articles/1052844/).

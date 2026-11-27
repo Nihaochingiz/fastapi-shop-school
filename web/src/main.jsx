@@ -144,7 +144,7 @@ function Lesson({ lesson, progress, toggleDone }) {
         <h2>Теория</h2>
         {lesson.theory.map(body => <p className="theory" key={body}>{body}</p>)}
         <pre>{lesson.code}</pre>
-        <a className="text-link" href={lesson.doc} target="_blank" rel="noreferrer">Документация по теме</a>
+        <a className="text-link" href={lesson.doc} target="_blank" rel="noreferrer">Читать по теме</a>
       </section>
       <section className="panel">
         <h2>Вопрос</h2><p>{lesson.question}</p>
